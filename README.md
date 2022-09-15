@@ -4,6 +4,19 @@ A solution that allows a local service running in a developer workstation to be 
 
 ![The problem](proxy-dev-env.png)
 
+## Start the test enviroment
+
+```bash
+docker-compose up --build
+```
+
+Consul, Traefik and Consul ESM are using "host" network mode, which means that if something is using the same port, startup will fail.
+
+|Service|URL|
+|-------|---|
+|Consul UI|http://127.0.0.1:8500/ui|
+|Traefik Dashboard|http://127.0.0.1:8080/dashboard/|
+
 ## Register services
 
 For this test, 3 services will be registered. 2 local services (the ones on the development environment), and one remote service (the one on the developer workstation). In this case, **local** means local to the consul agent, not the workstation.
