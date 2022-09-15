@@ -1,0 +1,17 @@
+{
+    "ID": "svc1",
+    "Name": "svc1",
+    "Port": 8001,
+    "Check": {
+      "Name": "HTTP health check",
+      "HTTP": "http://127.0.0.1:8001",
+      "Interval": "30s",
+      "Status": "passing"
+    },
+    "Tags": [
+        "traefik.enable=true",
+        "traefik.http.routers.svc1.rule=Path(`/svc1`)"
+      ]
+    }
+  }
+  

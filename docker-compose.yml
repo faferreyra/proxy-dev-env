@@ -1,0 +1,49 @@
+version: '3.7'
+services:
+  proxy:
+    image: traefik:v2.8
+    ports:
+      # HTTP port
+      - 8090:8090
+      # UI Port
+      - 8080:8080
+    volumes:
+      - ./traefik:/etc/traefik
+    network_mode: "host"
+
+  consul:
+    image: hashicorp/consul:1.11.2
+    command: ["agent", "-dev", "-enable-script-checks", "-client", "0.0.0.0"]
+    ports:
+      - 8500:8500
+    network_mode: "host"
+
+  consulesm:
+    image: hashicorp/consul-esm
+    environment:
+      - CONSUL_HTTP_ADDR=127.0.0.1:8500
+    network_mode: "host"
+
+  simple-service-1:
+    build: ./server
+    image: simple-server
+    ports:
+      - 8001:8000
+    environment:
+      - NAME=svc1
+
+  simple-service-2:
+    build: ./server
+    image: simple-server
+    ports:
+      - 8003:8000
+    environment:
+      - NAME=svc2
+
+  simple-service-3:
+    build: ./server
+    image: simple-server
+    ports:
+      - 8002:8000
+    environment:
+      - NAME=svc1-dev
